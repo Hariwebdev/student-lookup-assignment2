@@ -1,0 +1,7 @@
+{
+  "101": { "name": "Arun Kumar", "dept": "CSE", "year": "2nd Year", "marks": 88 },
+  "102": { "name": "Priya Sharma", "dept": "IT", "year": "3rd Year", "marks": 92 },
+  "103": { "name": "Rahul Verma", "dept": "ECE", "year": "1st Year", "marks": 76 },
+  "104": { "name": "Sneha Reddy", "dept": "CSE", "year": "4th Year", "marks": 95 },
+  "105": { "name": "Karthik Raja", "dept": "IT", "year": "2nd Year", "marks": 81 }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assignment 2 - Student Lookup</title>
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
+  padding: 20px;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #999;
+  font-size: 15px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #555;
+}
+
+#result {
+  margin-top: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  min-height: 40px;
+}
+
+#result p {
+  margin-bottom: 6px;
+}
+
+.error {
+  color: #a10000;
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 15px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Student Details Lookup</h1>
+
+  <div class="form-group">
+    <label>Enter Student ID</label>
+    <input type="text" id="studentId" placeholder="e.g. 101">
+  </div>
+
+  <button class="btn" onclick="getStudent()">Get Details</button>
+
+  <div id="result">
+    <p>Student details will appear here.</p>
+  </div>
+</div>
+
+<script>
+
+function getStudent() {
+  var id = document.getElementById("studentId").value.trim();
+  var resultBox = document.getElementById("result");
+
+  if (id === "") {
+    resultBox.innerHTML = "<p class='error'>Please enter a student ID.</p>";
+    return;
+  }
+
+  resultBox.innerHTML = "<p>Loading...</p>";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "students.json", true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var data = JSON.parse(xhr.responseText);
+        var student = data[id];
+
+        if (student) {
+          resultBox.innerHTML =
+            "<p><strong>Name:</strong> " + student.name + "</p>" +
+            "<p><strong>Department:</strong> " + student.dept + "</p>" +
+            "<p><strong>Year:</strong> " + student.year + "</p>" +
+            "<p><strong>Marks:</strong> " + student.marks + "</p>";
+        } else {
+          resultBox.innerHTML = "<p class='error'>No student found with ID " + id + ".</p>";
+        }
+      } else {
+        resultBox.innerHTML = "<p class='error'>Could not load student data. Make sure the server is running.</p>";
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+</script>
+
+</body>
+</html>
